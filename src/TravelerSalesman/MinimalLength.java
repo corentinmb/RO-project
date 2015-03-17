@@ -20,31 +20,27 @@ public class MinimalLength {
         }
     }
 
-    public Solution algorithm(){
+    public void algorithm(ArrayList<Arc> bestPath, Double bestSolution){
         //Le noeud courant
         Node current;
-
-        //La meilleur solution
-        Solution bestSolution = new Solution();
 
         while (aStack.isEmpty()){
             current = aStack.pop();
             if(current.isLeaf()){
-                Solution aSolution = new Solution(current);
-                if(aSolution.isRealizable(current) && (aSolution.value() < bestSolution.value())){
-                    bestSolution = aSolution;
-                    if(bestSolution.value() == root.inferiorBorn()){
-                        return bestSolution;
+                if(current.isRealizable() && (current.inferiorBorn() < bestSolution)){
+                    bestSolution = current.inferiorBorn();
+                    bestPath = current.getFixedArc();
+                    if(bestSolution.equals(root.inferiorBorn())){
+                        return;
                     }
                 }
             } else {
-                if (current.inferiorBorn() <= bestSolution.value()){
+                if (current.inferiorBorn() <= bestSolution){
                     current.createChild();
                     this.addChildToStack(current.getChilds());
                 }
             }
 
         }
-        return bestSolution;
     }
 }
