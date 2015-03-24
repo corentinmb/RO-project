@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RechercheOperationnelle.iml" filepath="$PROJECT_DIR$/RechercheOperationnelle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RO-project.iml" filepath="$PROJECT_DIR$/RO-project.iml" />
     </modules>
   </component>
 </project>
+

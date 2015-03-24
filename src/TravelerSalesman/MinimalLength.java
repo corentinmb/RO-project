@@ -38,7 +38,6 @@ public class MinimalLength {
         Node current;
 
         while (!aStack.isEmpty()){
-            System.out.println();
             current = aStack.pop();
             if(current.isLeaf()){
                 System.out.println("Apparemment c'est une feuille");

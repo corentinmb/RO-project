@@ -7,7 +7,7 @@ public class App {
     public static void main(String[] args) {
 
 
-        TSPData tspData = new TSPData("/Users/Ananas/Documents/DUTInfo/S3-S4/RechercheOperationnelle/out/production/RechercheOperationnelle/toy_instances/toy04.tsp");
+        TSPData tspData = new TSPData(args[0]);
         Node node = new Node(tspData.getMatrix());
         MinimalLength minimalLength = new MinimalLength(node);
 

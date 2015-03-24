@@ -22,7 +22,7 @@ public class Node {
      * @param matrix La matrice qui initialise le noeud
      */
     public Node(Matrix matrix){
-        System.out.println("Je me construit en root");
+        System.out.println("Je me construis en root");
         this.currentMatrix = matrix;
         this.fixedArc = new ArrayList<Arc>();
         this.childs = new ArrayList<Node>();
@@ -38,15 +38,17 @@ public class Node {
      * @param currentArc l'arc concerné par cette création d'enfant
      */
     public Node(Boolean forbidden, Matrix matrix, ArrayList<Arc> arcs, Arc currentArc){
-        //System.out.println("Je me construit comme étant un enfant");
         this.currentMatrix = (Matrix)matrix.clone();
         this.fixedArc = (ArrayList<Arc>)arcs.clone();
+        System.out.println("TAILLE FIXED ARCS ================== " + arcs.size());
+        this.childs = new ArrayList<Node>();
 
         if(!forbidden){
             //On met des plus l'infini à la ligne, colonne et à l'arc inverse
-            System.out.println("GENTIL");
             System.out.println("Ajout de l'arc " + currentArc.getX() + " " + currentArc.getY());
             this.fixedArc.add(currentArc);
+            System.out.println(" -----------------------------------> " + fixedArc.size());
+
             //Pour rappel X est la ligne et Y la colonne
 
             //On met des plus l'infini à la ligne
@@ -64,11 +66,9 @@ public class Node {
             //On met + l'infini l'arc inverse
             this.currentMatrix.getArray()[currentArc.getY()][currentArc.getX()] = 999999;
         } else{
-            System.out.println("MECHANT");
             //On met +l'infini à l'arc concerné
             this.currentMatrix.getArray()[currentArc.getX()][currentArc.getY()] = 999999;
         }
-        System.out.println("Je sors du constructeur spécial enfant");
     }
 
 
@@ -77,7 +77,11 @@ public class Node {
      * @return si c'est une feuille
      */
     public boolean isLeaf() {
-        return fixedArc.size() == currentMatrix.getColumnDimension();
+        System.out.println("TAILLE ARCS FIXES: " + fixedArc.size() + " ET TAILLE COLONNES: " + currentMatrix.getColumnDimension());
+        if(fixedArc.size() == currentMatrix.getColumnDimension())
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -145,11 +149,10 @@ public class Node {
     }
 
     /**
-     * La création d'enfant du noeud couran
+     * La création d'enfant du noeud courant
      */
     public void createChild(){
-        //L'arc par lequel on passe, un enddroit où il y a 0
-        System.out.println("Copulons ...");
+        //L'arc par lequel on passe, un endroit où il y a 0
         Arc arc = null;
         double[][] array = currentMatrix.getArray();
         boolean find = false;
@@ -157,7 +160,7 @@ public class Node {
         System.out.println("Calculons les infos");
         for(int i = 0; i < currentMatrix.getRowDimension(); ++i){
             for(int j = 0; j < currentMatrix.getColumnDimension(); ++j){
-                System.out.println("Tab : " + array[i][j] + " " + !fixedArc.contains(new Arc(i,j).toString()));
+                System.out.println("Tab : " + fixedArc.size());
                 if(array[i][j] == 0 && !fixedArc.contains(new Arc(i,j))){
 
                     arc = new Arc(i,j);
@@ -168,14 +171,14 @@ public class Node {
             if(find)
                 break;
         }
-        System.out.println("Commencons la copulation");
 
-        System.out.println("Arc : " + arc.getX() + " " + arc.getY());
+        //System.out.println("Arc : " + arc.getX() + " " + arc.getY());
         //On crée les deux enfants, un où l'on interdit le noeud
-        this.childs.add(new Node(false, this.currentMatrix, this.fixedArc,arc));
+        Node n = new Node(false, this.currentMatrix, this.fixedArc,arc);
+
+        this.childs.add(n);
         //L'autre où l'on autorise le noeud
         this.childs.add(new Node(true, this.currentMatrix, this.fixedArc, arc));
-
     }
 
 
@@ -184,7 +187,6 @@ public class Node {
      * @return un booléen
      */
     public boolean isRealizable() {
-        System.out.println("isRealizable");
         ArrayList<Arc> visitedArc = new ArrayList<Arc>();
 
         //On doit faire le parcours complet
