@@ -39,12 +39,12 @@ public class Node {
      */
     public Node(Boolean forbidden, Matrix matrix, ArrayList<Arc> arcs, Arc currentArc){
         //System.out.println("Je me construit comme étant un enfant");
-        this.currentMatrix = matrix;
-        this.fixedArc = arcs;
+        this.currentMatrix = (Matrix)matrix.clone();
+        this.fixedArc = (ArrayList<Arc>)arcs.clone();
 
         if(!forbidden){
             //On met des plus l'infini à la ligne, colonne et à l'arc inverse
-            //System.out.println("Je suis le gentil enfant,  on peut me passer dessus");
+            System.out.println("GENTIL");
             System.out.println("Ajout de l'arc " + currentArc.getX() + " " + currentArc.getY());
             this.fixedArc.add(currentArc);
             //Pour rappel X est la ligne et Y la colonne
@@ -64,7 +64,7 @@ public class Node {
             //On met + l'infini l'arc inverse
             this.currentMatrix.getArray()[currentArc.getY()][currentArc.getX()] = 999999;
         } else{
-            System.out.println("Je suis le méchant enfant");
+            System.out.println("MECHANT");
             //On met +l'infini à l'arc concerné
             this.currentMatrix.getArray()[currentArc.getX()][currentArc.getY()] = 999999;
         }
@@ -86,8 +86,8 @@ public class Node {
      */
     public Double inferiorBorn() {
         Double sumMinLine = new Double(0);
-        Double minOfLine = null;
-        Double minOfColumn = null;
+        Double minOfLine;
+        Double minOfColumn;
         Double sumMinColumn = new Double(0);
         int numberOfLines = currentMatrix.getRowDimension();
         int numberOfColumns = currentMatrix.getColumnDimension();
