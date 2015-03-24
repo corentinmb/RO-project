@@ -15,7 +15,7 @@ public class MinimalLength {
         aStack = new Stack<Node>();
         aStack.push(this.root);
         this.bestPath = new ArrayList<Arc>();
-        this.bestSolution = new Double(Double.MAX_VALUE);
+        this.bestSolution = new Double(999999);
 
     }
 
@@ -38,7 +38,6 @@ public class MinimalLength {
         Node current;
 
         while (!aStack.isEmpty()){
-            System.out.println("CC pd");
             System.out.println();
             current = aStack.pop();
             if(current.isLeaf()){
@@ -53,7 +52,7 @@ public class MinimalLength {
                 }
             } else {
                 System.out.println("Apparement ce n'est pas une feuille");
-                if (current.inferiorBorn() <= bestSolution){
+                if (current.inferiorBorn() <= bestSolution) {
                     current.createChild();
                     this.addChildToStack(current.getChilds());
                 }

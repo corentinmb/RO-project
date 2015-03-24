@@ -29,7 +29,7 @@ public class TSPData {
                     for (int i = 0; i < size; i++) {
                         for (int j = 0; j < size; j++) {
                             if (i == j)
-                                matrix.set(i, j, Double.MAX_VALUE);
+                                matrix.set(i, j, 999999);
                             else
                                 matrix.set(i, j, Math.floor(Math.sqrt((x[i] - x[j]) * (x[i] - x[j])
                                         + (y[i] - y[j]) * (y[i] - y[j])) + 0.5));

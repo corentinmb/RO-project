@@ -45,27 +45,28 @@ public class Node {
         if(!forbidden){
             //On met des plus l'infini à la ligne, colonne et à l'arc inverse
             //System.out.println("Je suis le gentil enfant,  on peut me passer dessus");
+            System.out.println("Ajout de l'arc " + currentArc.getX() + " " + currentArc.getY());
             this.fixedArc.add(currentArc);
             //Pour rappel X est la ligne et Y la colonne
 
             //On met des plus l'infini à la ligne
             for(int j = 0; j < this.currentMatrix.getColumnDimension(); ++j){
                 if(j != currentArc.getY())
-                    this.currentMatrix.getArray()[currentArc.getX()][j] = Double.MAX_VALUE;
+                    this.currentMatrix.getArray()[currentArc.getX()][j] = 999999;
             }
 
             //On met des plus l'infini sur la colonne
             for(int i = 0; i < this.currentMatrix.getRowDimension(); ++i){
                 if(i != currentArc.getX())
-                    this.currentMatrix.getArray()[i][currentArc.getY()] = Double.MAX_VALUE;
+                    this.currentMatrix.getArray()[i][currentArc.getY()] = 999999;
             }
 
             //On met + l'infini l'arc inverse
-            this.currentMatrix.getArray()[currentArc.getY()][currentArc.getX()] = Double.MAX_VALUE;
+            this.currentMatrix.getArray()[currentArc.getY()][currentArc.getX()] = 999999;
         } else{
             System.out.println("Je suis le méchant enfant");
             //On met +l'infini à l'arc concerné
-            this.currentMatrix.getArray()[currentArc.getX()][currentArc.getY()] = Double.MAX_VALUE;
+            this.currentMatrix.getArray()[currentArc.getX()][currentArc.getY()] = 999999;
         }
         System.out.println("Je sors du constructeur spécial enfant");
     }
@@ -95,10 +96,9 @@ public class Node {
         //Pour trouver le minimum des lignes
         for (int i = 0; i < numberOfLines; ++i) {
             //Parcours de la ligne pour chercher le minimum
-            for (int j = 0; j < numberOfColumns; ++j) {
-                if (minOfLine == null)
-                    minOfLine = array[i][j];
-                else if (array[i][j] <= minOfLine) {
+            minOfLine = array[i][0];
+            for (int j = 1; j < numberOfColumns; ++j) {
+                if (array[i][j] <= minOfLine) {
                     minOfLine = array[i][j];
                 }
             }
@@ -111,13 +111,13 @@ public class Node {
             }
         }
 
+
         //Pour trouver le minimum des colonnes
         for(int i = 0; i < numberOfColumns; ++i){
             //Parcours de la colonne pour chercher le minimum
-            for(int j = 0; j < numberOfLines; ++j){
-                if (minOfColumn == null)
-                    minOfColumn = array[j][i];
-                else if (array[i][j] <= minOfColumn) {
+            minOfColumn = array[0][i];
+            for(int j = 1; j < numberOfLines; ++j){
+                if (array[i][j] <= minOfColumn) {
                     minOfColumn = array[j][i];
                 }
             }
@@ -131,8 +131,17 @@ public class Node {
         }
         System.out.println("La borne inférieure est " + (sumMinLine+sumMinColumn));
         System.out.println("Voici la matrice maintenant");
-        this.currentMatrix.print(this.currentMatrix.getRowDimension(), this.currentMatrix.getColumnDimension());
+        displayMatrix(currentMatrix);
         return sumMinLine + sumMinColumn;
+    }
+
+    public void displayMatrix(Matrix matrix){
+        for(int i = 0; i < matrix.getRowDimension(); i++){
+            for(int j=0; j < matrix.getColumnDimension(); j++){
+                System.out.print(matrix.getArray()[i][j] + " | ");
+            }
+            System.out.println(" ");
+        }
     }
 
     /**
@@ -148,7 +157,9 @@ public class Node {
         System.out.println("Calculons les infos");
         for(int i = 0; i < currentMatrix.getRowDimension(); ++i){
             for(int j = 0; j < currentMatrix.getColumnDimension(); ++j){
-                if(array[i][j] == 0){
+                System.out.println("Tab : " + array[i][j] + " " + !fixedArc.contains(new Arc(i,j).toString()));
+                if(array[i][j] == 0 && !fixedArc.contains(new Arc(i,j))){
+
                     arc = new Arc(i,j);
                     find = true;
                     break;
@@ -158,6 +169,8 @@ public class Node {
                 break;
         }
         System.out.println("Commencons la copulation");
+
+        System.out.println("Arc : " + arc.getX() + " " + arc.getY());
         //On crée les deux enfants, un où l'on interdit le noeud
         this.childs.add(new Node(false, this.currentMatrix, this.fixedArc,arc));
         //L'autre où l'on autorise le noeud
