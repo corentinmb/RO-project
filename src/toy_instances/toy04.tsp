@@ -1,0 +1,11 @@
+NAME : toy4
+COMMENT : toy instance with 4 customers
+TYPE : TSP
+DIMENSION: 4
+EDGE_WEIGHT_TYPE : EUC_2D
+NODE_COORD_SECTION
+  1 0 0
+  2 0 100 
+  3 100 100
+  4 100 0
+EOF
