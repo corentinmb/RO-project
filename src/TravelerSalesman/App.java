@@ -6,7 +6,7 @@ public class App {
 
     public static void main(String[] args) {
 
-
+        // Chemin absolu vers le fichier de données
         TSPData tspData = new TSPData(args[0]);
         Node node = new Node(tspData.getMatrix());
         MinimalLength minimalLength = new MinimalLength(node);

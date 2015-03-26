@@ -40,14 +40,14 @@ public class Node {
     public Node(Boolean forbidden, Matrix matrix, ArrayList<Arc> arcs, Arc currentArc){
         this.currentMatrix = (Matrix)matrix.clone();
         this.fixedArc = (ArrayList<Arc>)arcs.clone();
-        System.out.println("TAILLE FIXED ARCS ================== " + arcs.size());
+        // System.out.println("TAILLE FIXED ARCS: " + arcs.size());
         this.childs = new ArrayList<Node>();
 
         if(!forbidden){
             //On met des plus l'infini à la ligne, colonne et à l'arc inverse
             System.out.println("Ajout de l'arc " + currentArc.getX() + " " + currentArc.getY());
             this.fixedArc.add(currentArc);
-            System.out.println(" -----------------------------------> " + fixedArc.size());
+            // System.out.println(" TAILLE FIXED ARCS: " + fixedArc.size());
 
             //Pour rappel X est la ligne et Y la colonne
 
@@ -77,7 +77,7 @@ public class Node {
      * @return si c'est une feuille
      */
     public boolean isLeaf() {
-        System.out.println("TAILLE ARCS FIXES: " + fixedArc.size() + " ET TAILLE COLONNES: " + currentMatrix.getColumnDimension());
+        // System.out.println("TAILLE ARCS FIXES: " + fixedArc.size() + " ET TAILLE COLONNES: " + currentMatrix.getColumnDimension());
         if(fixedArc.size() == currentMatrix.getColumnDimension())
             return true;
         else
@@ -160,7 +160,7 @@ public class Node {
         System.out.println("Calculons les infos");
         for(int i = 0; i < currentMatrix.getRowDimension(); ++i){
             for(int j = 0; j < currentMatrix.getColumnDimension(); ++j){
-                System.out.println("Tab : " + fixedArc.size());
+                // System.out.println("Tab : " + fixedArc.size());
                 if(array[i][j] == 0 && !fixedArc.contains(new Arc(i,j))){
 
                     arc = new Arc(i,j);

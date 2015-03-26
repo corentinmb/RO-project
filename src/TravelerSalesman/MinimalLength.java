@@ -10,6 +10,7 @@ public class MinimalLength {
     ArrayList<Arc> bestPath;
     Double bestSolution;
 
+
     public MinimalLength(Node root){
         this.root = root;
         aStack = new Stack<Node>();
